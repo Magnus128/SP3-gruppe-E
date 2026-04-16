@@ -29,5 +29,4 @@ User <|-- Admin
 Admin *-- AdminMenu
 UserMenu *.. WatchedList
 UserMenu *.. SavedList
-
 @enduml

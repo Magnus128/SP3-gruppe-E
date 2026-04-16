@@ -12,36 +12,36 @@ end note
 User -down-> (UC1)
 rectangle AdminMenu {
 rectangle UserMenu {
-usecase "Search Movie or Series" as (UC2)
-usecase "Show all media in category" as (UC3)
-usecase "Show all watched media" as (UC4)
-usecase "Show all saved media" as (UC5)
-usecase "Choose media" as (UC6)
+usecase "Search Movie or Series" as (UC2-1)
+usecase "Search all media in chosen category" as (UC2-2)
+usecase "Show all watched media" as (UC2-3)
+usecase "Show all saved media" as (UC2-4)
+usecase "Choose media" as (UC2-5)
 }
-usecase "Add new media" as (UC10)
-usecase "Remove media" as (UC11)
+usecase "Add new media" as (UC4-1)
+usecase "Remove media" as (UC4-2)
 }
 
 Admin -down-> (UC1)
 
 rectangle MediaMenu{
-usecase "Play media" as (UC7)
-usecase "Save media to watchlist" as (UC8)
-usecase "Remove media from watchlist" as (UC9)
-note bottom of (UC7) : Media is added to watched list
+usecase "Play media" as (UC3-1)
+usecase "Save media to watchlist" as (UC3-2)
+usecase "Remove media from watchlist" as (UC3-3)
+note bottom of (UC3-1) : Media is added to watched list
 }
 
-(UC1) --> (UC2)
-(UC1) --> (UC3)
-(UC1) --> (UC4)
-(UC1) --> (UC5)
-(UC1) ----> (UC10) : if admin
-(UC1) ----> (UC11) : if admin
-(UC3) --> (UC6)
-(UC4) --> (UC6)
-(UC5) --> (UC6)
-(UC6) --> (UC7)
-(UC6) --> (UC8)
-(UC6) --> (UC9)
+(UC1) --> (UC2-1)
+(UC1) --> (UC2-2)
+(UC1) --> (UC2-3)
+(UC1) --> (UC2-4)
+(UC1) ----> (UC4-1) : if admin
+(UC1) ----> (UC4-2) : if admin
+(UC2-2) --> (UC2-5)
+(UC2-3) --> (UC2-5)
+(UC2-4) --> (UC2-5)
+(UC2-5) --> (UC3-1)
+(UC2-5) --> (UC3-2)
+(UC2-5) --> (UC3-3)
 
 @enduml

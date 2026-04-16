@@ -1,0 +1,20 @@
+UC1: Startmenu
+- Oprette bruger
+- Login
+- Gemme logininfo
+
+UC2: UserMenu
+- Search movie or series
+- Search all media in chosen category
+- Show all watched media
+- Show all saved media
+- Choose media
+
+UC3: MediaMenu
+- Play media (and add to watched list)
+- Save media to watchlist
+- Remove media from watchlist
+
+UC4: AdminMenu
+- Add new media
+- Remove media
