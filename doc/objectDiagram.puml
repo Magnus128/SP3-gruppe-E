@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+object StreamingService
+object Media
+object Film
+object Series
+object Episode
+object User
+object WatchedList
+object SavedList
+object Menu
+object StartMenu
+object UserMenu
+
+StreamingService *-- User
+StreamingService *-- Media
+StreamingService *-- StartMenu
+Menu <|-- StartMenu
+Menu <|-- UserMenu
+Media <|-- Film
+Media <|-- Series
+Series *-- Episode
+User *-- UserMenu
+UserMenu *.. WatchedList
+UserMenu *.. SavedList
+
+@enduml
