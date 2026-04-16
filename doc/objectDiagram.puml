@@ -7,21 +7,26 @@ object Film
 object Series
 object Episode
 object User
+object Admin
 object WatchedList
 object SavedList
 object Menu
 object StartMenu
 object UserMenu
+object AdminMenu
 
 StreamingService *-- User
 StreamingService *-- Media
 StreamingService *-- StartMenu
 Menu <|-- StartMenu
 Menu <|-- UserMenu
+UserMenu <|-- AdminMenu
 Media <|-- Film
 Media <|-- Series
 Series *-- Episode
 User *-- UserMenu
+User <|-- Admin
+Admin *-- AdminMenu
 UserMenu *.. WatchedList
 UserMenu *.. SavedList
 
