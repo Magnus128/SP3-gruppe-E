@@ -1,0 +1,67 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Main{
+    static void main(String[] args)
+}
+class StreamingService {
+    String name
+    User currentUser
+    ArrayList<Movie> movies
+    ArrayList<Series> series
+    void startSession()
+    void loadMedia()
+    void loginUser()
+    void createUser()
+    void saveData()
+    void endSession()
+}
+class User {
+    String userName
+    String password
+    User (String userName, String password)
+    void showMenu()
+}
+class Admin {
+    static final boolean isAdmin = true
+    Admin (String userName, String password)
+    void showMenu()
+}
+abstract class Media
+class Movie
+class Series
+class Episode
+abstract class Menu
+class UserMenu {
+    Media searchMedia()
+    void searchAllinCategory()
+    void showWatched()
+    void showWatchLater()
+}
+class WatchLaterList
+class WatchedList
+class StartMenu
+class AdminMenu {
+    void addMedia()
+    void removeMedia()
+}
+class MediaMenu
+
+Main *-- StreamingService
+StreamingService *-- User
+StreamingService *-- StartMenu
+StreamingService *-- Media
+Menu <|-- UserMenu
+Menu <|-- StartMenu
+Menu <|-- MediaMenu
+User <|-- Admin
+User *-- UserMenu
+Admin *-- AdminMenu
+UserMenu <|-- AdminMenu
+UserMenu *.. WatchLaterList
+UserMenu *.. WatchedList
+Media *-- MediaMenu
+Media <|-- Movie
+Media <|-- Series
+Series *-- Episode
+@enduml

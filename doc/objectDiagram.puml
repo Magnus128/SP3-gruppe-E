@@ -3,30 +3,33 @@
 
 object StreamingService
 object Media
-object Film
+object Movie
 object Series
 object Episode
 object User
 object Admin
 object WatchedList
-object SavedList
+object WatchLaterList
 object Menu
 object StartMenu
 object UserMenu
 object AdminMenu
+object MediaMenu
 
 StreamingService *-- User
 StreamingService *-- Media
 StreamingService *-- StartMenu
 Menu <|-- StartMenu
 Menu <|-- UserMenu
+Menu <|-- MediaMenu
 UserMenu <|-- AdminMenu
-Media <|-- Film
+Media <|-- Movie
 Media <|-- Series
+Media *-- MediaMenu
 Series *-- Episode
 User *-- UserMenu
 User <|-- Admin
 Admin *-- AdminMenu
 UserMenu *.. WatchedList
-UserMenu *.. SavedList
+UserMenu *.. WatchLaterList
 @enduml
