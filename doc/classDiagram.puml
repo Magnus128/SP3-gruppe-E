@@ -4,48 +4,93 @@
 class Main{
     static void main(String[] args)
 }
+
 class StreamingService {
     String name
     User currentUser
     ArrayList<Movie> movies
     ArrayList<Series> series
+    StreamingService (String name, ArrayList<Movie> movies, ArrayList<Series> series)
     void startSession()
     void loadMedia()
-    void loginUser()
-    void createUser()
     void saveData()
     void endSession()
 }
+
 class User {
     String userName
     String password
+    ArrayList<Media> watchedList
+    ArrayList<Media> watchLaterList
     User (String userName, String password)
     void showMenu()
 }
+
 class Admin {
     static final boolean isAdmin = true
     Admin (String userName, String password)
     void showMenu()
 }
-abstract class Media
-class Movie
-class Series
-class Episode
-abstract class Menu
+
+abstract class Media{
+    String name
+    int releaseYear
+    Category[] categories
+    double rating
+    Media (String name, int releaseYear, Category[] categories, double rating)
+    String toCsv()
+}
+
+class Movie{
+    Movie (String name, int releaseYear, Category[] categories, double rating)
+}
+
+class Series{
+    int endYear
+    ArrayList<Season> seasons
+    Series (String name, int releaseYear, int endyear, Category[] categories, double rating, ArrayList<Season> seasons)
+}
+
+enum Category
+
+class Season{
+    int numberOfEpisodes
+    Season (int numberOfEpisodes)
+}
+
+interface Menu{
+    void showOptions()
+}
+
 class UserMenu {
+    UserMenu()
+    void showOptions()
     Media searchMedia()
     void searchAllinCategory()
     void showWatched()
     void showWatchLater()
 }
-class WatchLaterList
-class WatchedList
-class StartMenu
+
+class StartMenu{
+    StartMenu()
+    void showOptions()
+    void createUser()
+    void loginUser()
+}
+
 class AdminMenu {
+    AdminMenu()
     void addMedia()
     void removeMedia()
 }
-class MediaMenu
+
+class MediaMenu {
+    MediaMenu()
+    void showOptions()
+    void playMedia() //adds to watchedList
+    void addWatchLater()
+    void removeWatchLater()
+}
 
 Main *-- StreamingService
 StreamingService *-- User
@@ -58,10 +103,9 @@ User <|-- Admin
 User *-- UserMenu
 Admin *-- AdminMenu
 UserMenu <|-- AdminMenu
-UserMenu *.. WatchLaterList
-UserMenu *.. WatchedList
 Media *-- MediaMenu
 Media <|-- Movie
 Media <|-- Series
-Series *-- Episode
+Media *.. Category
+Series *-- Season
 @enduml
