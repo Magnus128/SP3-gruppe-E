@@ -4,22 +4,22 @@ public class MediaMenu implements Menu{
 
 
     @Override
-    public int showOptions(){
+    public void showOptions(){
         TextUI ui = new TextUI();
         int choice = ui.promptNumeric("1. Play Media" +
                 "\n2. Add media to Watch Later list" +
                 "\n3. Remove media from Watch Later list");
-        if(choice == 1){
-            playMedia();
-
-        } else if (choice == 2) {
-            addWatchLater();
-
-        } else if (choice == 3) {
-            removeWatchLater();
-
+        switch(choice){
+            case 1:
+                playMedia();
+            case 2:
+                addWatchLater();
+            case 3:
+                removeWatchLater();
+            default:
+                System.out.println("Try again");
+                showOptions();
         }
-        return choice;
     }
 
     public void playMedia(){
