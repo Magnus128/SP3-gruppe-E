@@ -1,6 +1,14 @@
 import util.TextUI;
 
 public class MediaMenu implements Menu{
+    private User currentUser;
+    private Media selectedMedia;
+
+    public MediaMenu(User user, Media media){
+        this.currentUser = user;
+        this.selectedMedia = media;
+    }
+
 
 
     @Override
@@ -12,10 +20,13 @@ public class MediaMenu implements Menu{
         switch(choice){
             case 1:
                 playMedia();
+                break;
             case 2:
                 addWatchLater();
+                break;
             case 3:
                 removeWatchLater();
+                break;
             default:
                 System.out.println("Try again");
                 showOptions();
@@ -24,20 +35,22 @@ public class MediaMenu implements Menu{
 
     public void playMedia(){
         // Afspiller media
-        System.out.println("Now playing: " + media.getName());
+        System.out.println("Now playing: " + selectedMedia.getName());
         // Tilføjer mediet til Watched list
-
+        currentUser.addToWatched(selectedMedia);
     }
 
     public void addWatchLater(){
         // Tilføjer media til WatchLater liste
-        System.out.println(media.getName() + " has been added to Watch Later list");
+        currentUser.addToWatchLater(selectedMedia);
+        System.out.println(selectedMedia.getName() + " has been added to Watch Later list");
 
     }
 
     public void removeWatchLater(){
         // Fjerne media fra WatchLater liste
-        System.out.println(media.getName() + " has been remove from Watch Later lis");
+        currentUser.removeFromWatchLater(selectedMedia);
+        System.out.println(selectedMedia.getName() + " has been remove from Watch Later lis");
     }
 
 
