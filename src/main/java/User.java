@@ -22,4 +22,13 @@ public class User {
 			userMenu.showOptions();
 		}
 	}
+
+    public void removeFromWatchLater(Media selectedMedia) {
+    }
+
+    public void addToWatchLater(Media selectedMedia) {
+    }
+
+    public void addToWatched(Media selectedMedia) {
+    }
 }

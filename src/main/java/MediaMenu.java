@@ -53,5 +53,4 @@ public class MediaMenu implements Menu{
         System.out.println(selectedMedia.getName() + " has been remove from Watch Later lis");
     }
 
-
 }
