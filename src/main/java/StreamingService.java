@@ -35,8 +35,6 @@ public class StreamingService {
 	}
 
 	private void loadStartMenu() {
-		int choice = StartMenu.showOptions(); //1 = login  2 = create account
-		
 
 	}
 }
