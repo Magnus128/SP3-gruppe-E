@@ -8,6 +8,15 @@ public class UserMenu implements Menu {
 		switch (choice) {
 			case 1:
 				// Search
+				String input = ui.promptText("Write the name of a movie of series: ");
+				Media media = findMedia(input);
+				if (!(media == null)) {
+					var mediaMenu = new MediaMenu(media);
+					// mediaMenu.showOptions();
+				} else {
+					System.out.println("Media not found, try again: ");
+					showOptions();
+				}
 				break;
 			case 2:
 				// All in specific category
@@ -22,5 +31,19 @@ public class UserMenu implements Menu {
 				System.out.println("\nTry again:");
 				showOptions();
 		}
+	}
+
+	private Media findMedia (String mediaName) {
+		for (Movie movie : StreamingService.movies) {
+			if (mediaName.equalsIgnoreCase(movie.getName())) {
+				return movie;
+			}
+		}
+		for (Series series : StreamingService.series) {
+			if (mediaName.equalsIgnoreCase(series.getName())) {
+				return series;
+			}
+		}
+		return null;
 	}
 }

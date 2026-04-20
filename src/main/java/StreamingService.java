@@ -3,8 +3,24 @@ import java.util.ArrayList;
 public class StreamingService {
 	private String name;
 	private User currentUser;
-	private ArrayList<Movie> movies;
-	private ArrayList<Series> series;
+	public static ArrayList<Movie> movies;
+	public static ArrayList<Series> series;
+
+	public String getName() {
+		return name;
+	}
+
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public ArrayList<Movie> getMovies() {
+		return movies;
+	}
+
+	public ArrayList<Series> getSeries() {
+		return series;
+	}
 
 	public void startSession() {
 		// Indlæser media
