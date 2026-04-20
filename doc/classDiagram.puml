@@ -48,7 +48,7 @@ class Movie{
 class Series{
     int endYear
     ArrayList<Season> seasons
-    Series (String name, int releaseYear, int endyear, Category[] categories, double rating, ArrayList<Season> seasons)
+    Series (String name, int releaseYear, int endYear, Category[] categories, double rating, ArrayList<Season> seasons)
 }
 
 enum Category
