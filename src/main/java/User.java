@@ -15,10 +15,10 @@ public class User {
 
 	public void showMenu() {
 		if (this instanceof Admin) {
-			var adminMenu = new AdminMenu();
+			var adminMenu = new AdminMenu(watchedList, watchLaterList);
 			adminMenu.showOptions();
 		} else {
-			var userMenu = new UserMenu();
+			var userMenu = new UserMenu(watchedList, watchLaterList);
 			userMenu.showOptions();
 		}
 	}

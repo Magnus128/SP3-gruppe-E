@@ -1,11 +1,16 @@
 import util.TextUI;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UserMenu implements Menu {
-	@Override
+	private ArrayList<Media> watchedList;
+	private ArrayList<Media> watchLaterList;
+
+	public UserMenu(ArrayList<Media> watchedList, ArrayList<Media> watchLaterList) {
+		this.watchedList = watchedList;
+		this.watchLaterList = watchLaterList;
+	}
+
 	public void showOptions() {
 		var ui = new TextUI();
 		int choice = ui.promptNumeric("1. Search for media \n2. " +
@@ -49,9 +54,34 @@ public class UserMenu implements Menu {
 				break;
 			case 3:
 				// Previously watched
+				int watchedCounter = 1;
+				for (Media watchedMedia : watchedList) {
+					System.out.println(watchedCounter + ". " + watchedMedia.getName());
+					watchedCounter++;
+				}
+				try {
+					int watchedListChoice = ui.promptNumeric("Choose a movie or series from your list of " +
+							"previously watched media: ");
+					var mediaMenu = new MediaMenu(watchedList.get(watchedListChoice - 1));
+					mediaMenu.showOptions();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 				break;
 			case 4:
 				// Watch later list
+				int watchLaterCounter = 1;
+				for (Media watchLaterMedia : watchLaterList) {
+					System.out.println(watchLaterCounter + ". " + watchLaterMedia.getName());
+					watchLaterCounter++;
+				}
+				try {
+					int watchLaterChoice = ui.promptNumeric("Choose a movie or series from media you've saved: ");
+					var mediaMenu = new MediaMenu(watchLaterList.get(watchLaterChoice - 1));
+					mediaMenu.showOptions();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 				break;
 			default:
 				System.out.println("Try again:");
