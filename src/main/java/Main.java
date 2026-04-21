@@ -6,9 +6,5 @@ public class Main {
 		service.runSession();
 		service.endSession();
 
-
-
-
-
 	}
 }

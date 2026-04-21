@@ -17,6 +17,8 @@ public class StartMenu implements Menu {
 			loginUser();
 		} else if (choice == 2) {
 			createUser();
+		} else {
+			showOptions();
 		}
 	}
 
