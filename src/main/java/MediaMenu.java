@@ -34,26 +34,18 @@ public class MediaMenu implements Menu{
     }
 
     public void playMedia(){
-        // Afspiller media
-        System.out.println("Now playing: " + selectedMedia.getName());
-        // Tilføjer mediet til Watched list
+        // Afspiller media og tilføjer til Watched List
         currentUser.addToWatched(selectedMedia);
-        currentUser.saveWatchedToFile();
     }
 
     public void addWatchLater(){
         // Tilføjer media til WatchLater liste
         currentUser.addToWatchLater(selectedMedia);
-        currentUser.saveWatchLaterToFile();
-        System.out.println(selectedMedia.getName() + " has been added to Watch Later list");
-
     }
 
     public void removeWatchLater(){
         // Fjerne media fra WatchLater liste
         currentUser.removeFromWatchLater(selectedMedia);
-        currentUser.saveWatchLaterToFile();
-        System.out.println(selectedMedia.getName() + " has been remove from Watch Later lis");
     }
 
 }

@@ -12,4 +12,15 @@ public class Media {
         return name;
     }
 
+    public Category[] getCategories() {
+        return categories;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public double getRating() {
+        return rating;
+    }
 }
