@@ -44,11 +44,10 @@ public class UserMenu implements Menu {
 
 				ArrayList<Media> allInCategory = listAllInCategory(chosenCategory);
 				try {
-					int fromCategoryChoice = ui.promptNumeric("Choose a movie or series from the list: ");
-					var mediaMenu = new MediaMenu(allInCategory.get(fromCategoryChoice - 1));
-					mediaMenu.showOptions();
-				} catch (Exception e) {
+					chooseMedia(allInCategory);
+				} catch (IndexOutOfBoundsException e) {
 					System.out.println(e.getMessage());
+					System.out.println("Try again: ");
 					showOptions();
 				}
 				break;
@@ -87,6 +86,12 @@ public class UserMenu implements Menu {
 				System.out.println("Try again:");
 				showOptions();
 		}
+	}
+
+	private Media chooseMedia(ArrayList<Media> mediaList) throws IndexOutOfBoundsException {
+		var ui = new TextUI();
+		int choice = ui.promptNumeric("Choose a movie or series from the list: ");
+		return mediaList.get(choice - 1);
 	}
 
 	private ArrayList<Media> listAllInCategory(Category chosenCategory) {
