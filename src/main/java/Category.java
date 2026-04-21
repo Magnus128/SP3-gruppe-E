@@ -1,3 +1,22 @@
 public enum Category {
-
+    ACTION,
+    ADVENTURE,
+    BIOGRAPHY,
+    COMEDY,
+    CRIME,
+    DRAMA,
+    FAMILY,
+    FANTASY,
+    FILMNOIR,
+    HISTORY,
+    HORROR,
+    MUSIC,
+    MUSICAL,
+    MYSTERY,
+    ROMANCE,
+    SCIFI,
+    SPORT,
+    THRILLER,
+    WAR,
+    WESTERN,
 }
