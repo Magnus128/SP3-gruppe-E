@@ -47,10 +47,10 @@ public class StreamingService {
 			String filmName = filmInfoValues[0].trim();
 			int filmReleaseYear = Integer.parseInt(filmInfoValues[1].trim());
 
-			ArrayList<String> filmcategoryList = new ArrayList<>();
+			ArrayList<Category> filmcategoryList = new ArrayList<>();
 			String [] filmCategoryValues = filmInfoValues[2].trim().split(",");
 			for (String filmCategory : filmCategoryValues ) {
-				filmcategoryList.add(filmCategory.trim());
+				filmcategoryList.add(Category.valueOf(filmCategory.trim()));
 			}
 
 			double rating = Double.parseDouble(filmInfoValues[3].trim().replace(",", "."));
@@ -58,8 +58,6 @@ public class StreamingService {
 			movies.add(new Movie(filmName, filmReleaseYear, filmcategoryList, rating));
 
 		}
-
-
 
 		// Series
 		ArrayList <String> seriesInfos = FileIO.readData("src/main/resources/serier.csv");
@@ -76,10 +74,10 @@ public class StreamingService {
 				seriesEndYear = Integer.parseInt(seriesYear[1].trim());
 			}
 
-			ArrayList<String> seriescategoryList = new ArrayList<>();
-			String [] filmCategoryValues = seriesInfoValues[2].trim().split(",");
-			for (String filmCategory : filmCategoryValues ) {
-				seriescategoryList.add(filmCategory.trim());
+			ArrayList<Category> seriescategoryList = new ArrayList<>();
+			String [] seriesCategoryValues = seriesInfoValues[2].trim().split(",");
+			for (String seriesCategory : seriesCategoryValues ) {
+				seriescategoryList.add(Category.valueOf(seriesCategory.trim()));
 			}
 
 			double rating = Double.parseDouble(seriesInfoValues[3].trim().replace(",", "."));

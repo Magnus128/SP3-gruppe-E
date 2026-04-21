@@ -4,10 +4,10 @@ public abstract class Media {
 
     private String name;
     private int releaseYear;
-    private ArrayList<String> categories;
+    private ArrayList<Category> categories;
     private double rating;
 
-    public Media(String name, int releaseYear, ArrayList<String> categories, double rating) {
+    public Media(String name, int releaseYear, ArrayList<Category> categories, double rating) {
         this.name = name;
         this.releaseYear = releaseYear;
         this.categories = categories;
@@ -22,7 +22,7 @@ public abstract class Media {
         return releaseYear;
     }
 
-    public ArrayList<String> getCategories() {
+    public ArrayList<Category> getCategories() {
         return categories;
     }
 
