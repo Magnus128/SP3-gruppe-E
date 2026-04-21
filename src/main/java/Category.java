@@ -19,5 +19,8 @@ public enum Category {
 	THRILLER,
 	WAR,
 	WESTERN,
+	ANIMATION,
+	DOCUMENTARY,
+	TALKSHOW
 
 }

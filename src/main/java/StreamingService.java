@@ -50,7 +50,7 @@ public class StreamingService {
 			ArrayList<Category> filmcategoryList = new ArrayList<>();
 			String [] filmCategoryValues = filmInfoValues[2].trim().split(",");
 			for (String filmCategory : filmCategoryValues ) {
-				filmcategoryList.add(Category.valueOf(filmCategory.trim()));
+				filmcategoryList.add(Category.valueOf(filmCategory.trim().toUpperCase().replace("-","")));
 			}
 
 			double rating = Double.parseDouble(filmInfoValues[3].trim().replace(",", "."));
@@ -77,7 +77,7 @@ public class StreamingService {
 			ArrayList<Category> seriescategoryList = new ArrayList<>();
 			String [] seriesCategoryValues = seriesInfoValues[2].trim().split(",");
 			for (String seriesCategory : seriesCategoryValues ) {
-				seriescategoryList.add(Category.valueOf(seriesCategory.trim()));
+				seriescategoryList.add(Category.valueOf(seriesCategory.trim().toUpperCase().replace("-","")));
 			}
 
 			double rating = Double.parseDouble(seriesInfoValues[3].trim().replace(",", "."));
@@ -95,6 +95,16 @@ public class StreamingService {
 			series.add(new Series(seriesName, seriesReleaseYear, seriesEndYear, seriescategoryList, rating, seasonList));
 
 		}
+
+		// TEST
+		/*
+		for (Movie s : movies) {
+			System.out.println(s);
+		}
+		for (Movie s : movies) {
+			System.out.println(s);
+		}
+		*/
 
 
 	}
