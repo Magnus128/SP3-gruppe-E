@@ -1,4 +1,9 @@
 import util.TextUI;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class UserMenu implements Menu {
 	@Override
 	public void showOptions() {
@@ -9,10 +14,10 @@ public class UserMenu implements Menu {
 			case 1:
 				// Search
 				String input = ui.promptText("Write the name of a movie of series: ");
-				Media media = findMedia(input);
+				Media media = findMediaFromName(input);
 				if (!(media == null)) {
 					var mediaMenu = new MediaMenu(media);
-					// mediaMenu.showOptions();
+					mediaMenu.showOptions();
 				} else {
 					System.out.println("Media not found, try again: ");
 					showOptions();
@@ -30,6 +35,17 @@ public class UserMenu implements Menu {
 						19. War	20. Western
 						""");
 				int categoryChoice = ui.promptNumeric("Choose a category: ");
+				Category chosenCategory = chooseCategory(categoryChoice);
+
+				ArrayList<Media> allInCategory = listAllInCategory(chosenCategory);
+				try {
+					int fromCategoryChoice = ui.promptNumeric("Choose a movie or series from the list: ");
+					var mediaMenu = new MediaMenu(allInCategory.get(fromCategoryChoice - 1));
+					mediaMenu.showOptions();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					showOptions();
+				}
 				break;
 			case 3:
 				// Previously watched
@@ -38,12 +54,79 @@ public class UserMenu implements Menu {
 				// Watch later list
 				break;
 			default:
-				System.out.println("\nTry again:");
+				System.out.println("Try again:");
 				showOptions();
 		}
 	}
 
-	private Media findMedia (String mediaName) {
+	private ArrayList<Media> listAllInCategory(Category chosenCategory) {
+		int counter = 1;
+		ArrayList<Media> mediaList = new ArrayList<>();
+		for (Movie movie : StreamingService.movies) {
+			if (Arrays.asList(movie.getCategories()).contains(chosenCategory)) {
+				System.out.println(counter + ". " + movie.getName());
+				mediaList.add(movie);
+				counter++;
+			}
+		}
+		for (Series series : StreamingService.series) {
+			if (Arrays.asList(series.getCategories()).contains(chosenCategory)) {
+				System.out.println(counter + ". " + series.getName());
+				mediaList.add(series);
+				counter++;
+			}
+		}
+		return mediaList;
+	}
+
+	private Category chooseCategory(int choice) {
+		switch (choice) {
+			case 1:
+				return Category.ACTION;
+			case 2:
+				return Category.ADVENTURE;
+			case 3:
+				return Category.BIOGRAPHY;
+			case 4:
+				return Category.COMEDY;
+			case 5:
+				return Category.CRIME;
+			case 6:
+				return Category.DRAMA;
+			case 7:
+				return Category.FAMILY;
+			case 8:
+				return Category.FANTASY;
+			case 9:
+				return Category.FILMNOIR;
+			case 10:
+				return Category.HISTORY;
+			case 11:
+				return Category.HORROR;
+			case 12:
+				return Category.MUSIC;
+			case 13:
+				return Category.MUSICAL;
+			case 14:
+				return Category.MYSTERY;
+			case 15:
+				return Category.ROMANCE;
+			case 16:
+				return Category.SCIFI;
+			case 17:
+				return Category.SPORT;
+			case 18:
+				return Category.THRILLER;
+			case 19:
+				return Category.WAR;
+			case 20:
+				return Category.WESTERN;
+			default:
+				return null;
+		}
+	}
+
+	private Media findMediaFromName(String mediaName) {
 		for (Movie movie : StreamingService.movies) {
 			if (mediaName.equalsIgnoreCase(movie.getName())) {
 				return movie;
