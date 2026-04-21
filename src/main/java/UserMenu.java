@@ -44,7 +44,8 @@ public class UserMenu implements Menu {
 
 				ArrayList<Media> allInCategory = listAllInCategory(chosenCategory);
 				try {
-					chooseMedia(allInCategory);
+					var mediaMenu = new MediaMenu(chooseMedia(allInCategory));
+					mediaMenu.showOptions();
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println(e.getMessage());
 					System.out.println("Try again: ");
@@ -59,12 +60,12 @@ public class UserMenu implements Menu {
 					watchedCounter++;
 				}
 				try {
-					int watchedListChoice = ui.promptNumeric("Choose a movie or series from your list of " +
-							"previously watched media: ");
-					var mediaMenu = new MediaMenu(watchedList.get(watchedListChoice - 1));
+					var mediaMenu = new MediaMenu(chooseMedia(watchedList));
 					mediaMenu.showOptions();
-				} catch (Exception e) {
+				} catch (IndexOutOfBoundsException e) {
 					System.out.println(e.getMessage());
+					System.out.println("Try again: ");
+					showOptions();
 				}
 				break;
 			case 4:
@@ -75,11 +76,12 @@ public class UserMenu implements Menu {
 					watchLaterCounter++;
 				}
 				try {
-					int watchLaterChoice = ui.promptNumeric("Choose a movie or series from media you've saved: ");
-					var mediaMenu = new MediaMenu(watchLaterList.get(watchLaterChoice - 1));
+					var mediaMenu = new MediaMenu(chooseMedia(watchLaterList));
 					mediaMenu.showOptions();
-				} catch (Exception e) {
+				} catch (IndexOutOfBoundsException e) {
 					System.out.println(e.getMessage());
+					System.out.println("Try again: ");
+					showOptions();
 				}
 				break;
 			default:
