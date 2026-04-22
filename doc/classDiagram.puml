@@ -85,7 +85,9 @@ class AdminMenu {
 }
 
 class MediaMenu {
-    MediaMenu()
+    Media selectedMedia
+    User currentUser
+    MediaMenu(User user, Media media)
     void showOptions()
     void playMedia() //adds to watchedList
     void addWatchLater()
