@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public abstract class Media {
-
     private String name;
     private int releaseYear;
     private ArrayList<Category> categories;

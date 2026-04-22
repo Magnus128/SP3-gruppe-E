@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Series extends Media {
-
     private int endYear;
     private ArrayList<Season> seasons;
 

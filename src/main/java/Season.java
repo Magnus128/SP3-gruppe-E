@@ -1,5 +1,4 @@
 public class Season {
-
     private int season;
     private int numberOfEpisodes;
 

@@ -10,7 +10,6 @@ public class MediaMenu implements Menu{
     }
 
 
-
     @Override
     public void showOptions(){
         TextUI ui = new TextUI();

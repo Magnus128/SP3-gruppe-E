@@ -60,7 +60,6 @@ public class StartMenu implements Menu {
 		} else {
 			ui.displayMsg("There is a user with the same name. Please enter a different user.");
 		}
-
 	}
 
 	private void loginUser() {

@@ -24,7 +24,6 @@ public class User {
 		}
 	}
 
-
     public void saveWatchedToFile() {
         try (FileWriter writer = new FileWriter("src/main/resources/watchlater.csv")) {
 
