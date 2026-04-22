@@ -37,7 +37,7 @@ public class User {
 	}
 
     public void saveWatchedToFile() {
-        try (FileWriter writer = new FileWriter("src/main/resources/watchlater.csv")) {
+        try (FileWriter writer = new FileWriter("src/main/resources/watched.csv")) {
 
             for (Media media : watchedList) {
                 // Converts Category[] → String
