@@ -1,4 +1,6 @@
-Username, Password
-feyzullah, 12345
-Ali, 2
-Magnus, 1234
+Username, Password, isAdmin
+feyzullah, 12345, false
+Ali, 2, false
+Magnus, 1234, false
+jens, 2345, false
+admin, 1234, true

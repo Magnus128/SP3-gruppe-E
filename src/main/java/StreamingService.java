@@ -38,8 +38,7 @@ public class StreamingService {
 	}
 
 	private void loadUserMenu() {
-		var userMenu = new UserMenu(this);
-		userMenu.showOptions();
+		currentUser.showMenu();
 	}
 
 	public void endSession() {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    private StreamingService service;
+    protected StreamingService service;
     private String username;
     private String password;
     private ArrayList<Media> watchedList;
@@ -27,13 +27,8 @@ public class User {
     }
 
     public void showMenu() {
-		if (this instanceof Admin) {
-			var adminMenu = new AdminMenu(service);
-			adminMenu.showOptions();
-		} else {
 			var userMenu = new UserMenu(service);
 			userMenu.showOptions();
-		}
 	}
 
     public void saveWatchedToFile() {

@@ -32,7 +32,7 @@ public class StartMenu implements Menu {
 		ui.displayMsg(" --- Create User --- ");
 		String username = ui.promptText("Username : ");
 		String password = ui.promptText("Password : ");
-
+		boolean isAdmin = ui.promptBinary("Are you an Admin? (y/n)");
 
 		// Programmet skal kontrollere om, der findes samme navn i login.csv
 		// Hvis der er et match, kan man ikke oprette ny bruger og sættes flag til false
@@ -51,14 +51,18 @@ public class StartMenu implements Menu {
 		if (flag) {
 
 			// tilføjes til en Arraylist
-			String newUser = username + ", " + password;
+			String newUser = username + ", " + password + ", " + isAdmin;
 			loginsInfo.add(newUser);
 
 			// gemmes i login.csv
-			String header = "Username, Password";
+			String header = "Username, Password, isAdmin";
 			FileIO.saveData(loginsInfo, "src/main/resources/login.csv", header);
 
-			service.setCurrentUser(new User(service, username, password));
+			if (isAdmin) {
+				service.setCurrentUser(new Admin(service, username, password));
+			} else {
+				service.setCurrentUser(new User(service, username, password));
+			}
 			ui.displayMsg("A new user has been created.");
 
 		} else {
@@ -82,9 +86,14 @@ public class StartMenu implements Menu {
 			String[] infoValues = info.trim().split(",");
 			String loginCsvName = infoValues[0].trim();
 			String loginCsvPassword = infoValues[1].trim();
+			boolean loginCsvAdminCheck = Boolean.parseBoolean(infoValues[2].trim());
 
 			if (loginCsvName.equalsIgnoreCase(username) && loginCsvPassword.equalsIgnoreCase(password)) {
-				service.setCurrentUser(new User(service, username, password));
+				if (loginCsvAdminCheck) {
+					service.setCurrentUser(new Admin(service, username, password));
+				} else {
+					service.setCurrentUser(new User(service, username, password));
+				}
 				flag_login = true;
 				break;
 			}
