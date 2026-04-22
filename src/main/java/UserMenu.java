@@ -13,28 +13,34 @@ public class UserMenu implements Menu {
 	}
 
 	public void showOptions() {
-		int choice = ui.promptNumeric("1. Search for media \n2. " +
-				"Search media in category \n3. Previously watched \n4. Watch later");
-		switch (choice) {
-			case 1:
-				// Search
-				searchMedia();
-				break;
-			case 2:
-				// All in specific category
-				searchAllinCategory();
-				break;
-			case 3:
-				// Previously watched
-				showWatched();
-				break;
-			case 4:
-				// Watch later list
-				showWatchLater();
-				break;
-			default:
-				System.out.println("Try again:");
-				showOptions();
+		int choice = 0;
+		while (choice != 5) {
+			choice = ui.promptNumeric("1. Search for media \n2. " +
+					"Search media in category \n3. Previously watched \n4. Watch later \n5. End session");
+			switch (choice) {
+				case 1:
+					// Search
+					searchMedia();
+					break;
+				case 2:
+					// All in specific category
+					searchAllinCategory();
+					break;
+				case 3:
+					// Previously watched
+					showWatched();
+					break;
+				case 4:
+					// Watch later list
+					showWatchLater();
+					break;
+				case 5:
+					// End session
+					break;
+				default:
+					System.out.println("Try again:");
+					showOptions();
+			}
 		}
 	}
 
@@ -116,14 +122,14 @@ public class UserMenu implements Menu {
 		int counter = 1;
 		ArrayList<Media> mediaList = new ArrayList<>();
 		for (Movie movie : service.getMovies()) {
-			if (Arrays.asList(movie.getCategories()).contains(chosenCategory)) {
+			if (movie.getCategories().contains(chosenCategory)) {
 				System.out.println(counter + ". " + movie.getName());
 				mediaList.add(movie);
 				counter++;
 			}
 		}
 		for (Series series : service.getSeries()) {
-			if (Arrays.asList(series.getCategories()).contains(chosenCategory)) {
+			if (series.getCategories().contains(chosenCategory)) {
 				System.out.println(counter + ". " + series.getName());
 				mediaList.add(series);
 				counter++;

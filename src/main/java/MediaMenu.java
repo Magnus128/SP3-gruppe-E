@@ -9,7 +9,6 @@ public class MediaMenu implements Menu{
         this.selectedMedia = media;
     }
 
-
     @Override
     public void showOptions(){
         TextUI ui = new TextUI();
@@ -46,5 +45,4 @@ public class MediaMenu implements Menu{
         // Fjerne media fra WatchLater liste
         service.getCurrentUser().removeFromWatchLater(selectedMedia);
     }
-
 }

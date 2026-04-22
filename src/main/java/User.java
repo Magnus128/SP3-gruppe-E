@@ -14,6 +14,8 @@ public class User {
         this.service = service;
         this.username = username;
         this.password = password;
+        watchedList = new ArrayList<>();
+        watchLaterList = new ArrayList<>();
     }
 
     public ArrayList<Media> getWatchedList() {
@@ -86,7 +88,7 @@ public class User {
 
     public void addToWatchLater(Media selectedMedia) {
         // Add the selected media to the watch later list
-        getWatchLaterList().add(selectedMedia);
+        watchLaterList.add(selectedMedia);
         // Save updated list to file
         saveWatchLaterToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watch Later list.");
@@ -94,7 +96,7 @@ public class User {
 
     public void removeFromWatchLater(Media selectedMedia) {
         // Remove the selected media from the watch later list
-        getWatchLaterList().remove(selectedMedia);
+        watchLaterList.remove(selectedMedia);
         // Save updated list to file
         saveWatchLaterToFile();
         System.out.println(selectedMedia.getName() + " has been removed from Watch Later list.");
@@ -102,9 +104,9 @@ public class User {
 
     public void addToWatched(Media selectedMedia) {
         // Removes media from Watch Later list first
-        getWatchLaterList().remove(selectedMedia);
+        watchLaterList.remove(selectedMedia);
         // Adds media to Watched list
-        getWatchedList().add(selectedMedia);
+        watchedList.add(selectedMedia);
         // Save updated lists to file
         saveWatchLaterToFile();
         saveWatchedToFile();
