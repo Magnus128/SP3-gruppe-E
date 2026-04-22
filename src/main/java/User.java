@@ -4,22 +4,32 @@ import java.util.ArrayList;
 
 public class User {
 
+    private StreamingService service;
     private String username;
     private String password;
     private ArrayList<Media> watchedList;
     private ArrayList<Media> watchLaterList;
 
-    public User(String username, String password) {
+    public User(StreamingService service, String username, String password) {
+        this.service = service;
         this.username = username;
         this.password = password;
     }
 
-	public void showMenu() {
+    public ArrayList<Media> getWatchedList() {
+        return watchedList;
+    }
+
+    public ArrayList<Media> getWatchLaterList() {
+        return watchLaterList;
+    }
+
+    public void showMenu() {
 		if (this instanceof Admin) {
-			var adminMenu = new AdminMenu();
+			var adminMenu = new AdminMenu(service);
 			adminMenu.showOptions();
 		} else {
-			var userMenu = new UserMenu();
+			var userMenu = new UserMenu(service);
 			userMenu.showOptions();
 		}
 	}
@@ -30,11 +40,11 @@ public class User {
             for (Media media : watchedList) {
                 // Converts Category[] → String
                 StringBuilder categoryString = new StringBuilder();
-                Category[] categories = media.getCategories();
+                ArrayList<Category> categories = media.getCategories();
 
-                for (int i = 0; i < categories.length; i++) {
-                    categoryString.append(categories[i].name());
-                    if (i < categories.length - 1) {
+                for (int i = 0; i < categories.size(); i++) {
+                    categoryString.append(categories.get(i).name());
+                    if (i < categories.size() - 1) {
                         categoryString.append(", ");
                     }
                 }
@@ -55,11 +65,11 @@ public class User {
             for (Media media : watchLaterList) {
                 // Converts Category[] → String
                 StringBuilder categoryString = new StringBuilder();
-                Category[] categories = media.getCategories();
+                ArrayList<Category> categories = media.getCategories();
 
-                for (int i = 0; i < categories.length; i++) {
-                    categoryString.append(categories[i].name());
-                    if (i < categories.length - 1) {
+                for (int i = 0; i < categories.size(); i++) {
+                    categoryString.append(categories.get(i).name());
+                    if (i < categories.size() - 1) {
                         categoryString.append(", ");
                     }
                 }
@@ -76,28 +86,28 @@ public class User {
 
     public void addToWatchLater(Media selectedMedia) {
         // Add the selected media to the watch later list
-        currentUser.getWatchLaterList().add(selectedMedia);
+        getWatchLaterList().add(selectedMedia);
         // Save updated list to file
-        currentUser.saveWatchLaterToFile();
+        saveWatchLaterToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watch Later list.");
     }
 
     public void removeFromWatchLater(Media selectedMedia) {
         // Remove the selected media from the watch later list
-        currentUser.getWatchLaterList().remove(selectedMedia);
+        getWatchLaterList().remove(selectedMedia);
         // Save updated list to file
-        currentUser.saveWatchLaterToFile();
+        saveWatchLaterToFile();
         System.out.println(selectedMedia.getName() + " has been removed from Watch Later list.");
     }
 
     public void addToWatched(Media selectedMedia) {
         // Removes media from Watch Later list first
-        currentUser.getWatchLaterList().remove(selectedMedia);
+        getWatchLaterList().remove(selectedMedia);
         // Adds media to Watched list
-        currentUser.getWatchedList().add(selectedMedia);
+        getWatchedList().add(selectedMedia);
         // Save updated lists to file
-        currentUser.saveWatchLaterToFile();
-        currentUser.saveWatchedToFile();
+        saveWatchLaterToFile();
+        saveWatchedToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watched list.");
         System.out.println("Now playing: " + selectedMedia.getName());
     }

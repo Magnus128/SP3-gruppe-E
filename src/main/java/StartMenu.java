@@ -4,10 +4,13 @@ import util.TextUI;
 import java.util.ArrayList;
 
 public class StartMenu implements Menu {
-
-	User user = null;
 	TextUI ui = new TextUI();
+	private StreamingService service;
 	ArrayList<String> loginsInfo = FileIO.readData("src/main/resources/login.csv");
+
+	public StartMenu(StreamingService service) {
+		this.service = service;
+	}
 
 	@Override
 	public void showOptions() {
@@ -18,6 +21,7 @@ public class StartMenu implements Menu {
 		} else if (choice == 2) {
 			createUser();
 		} else {
+			System.out.println("Please enter a valid choice");
 			showOptions();
 		}
 	}
@@ -54,11 +58,12 @@ public class StartMenu implements Menu {
 			String header = "Username, Password";
 			FileIO.saveData(loginsInfo, "src/main/resources/login.csv", header);
 
-			user = new User(username, password);
+			service.setCurrentUser(new User(service, username, password));
 			ui.displayMsg("A new user has been created.");
 
 		} else {
 			ui.displayMsg("There is a user with the same name. Please enter a different user.");
+			createUser();
 		}
 	}
 
@@ -79,7 +84,7 @@ public class StartMenu implements Menu {
 			String loginCsvPassword = infoValues[1].trim();
 
 			if (loginCsvName.equalsIgnoreCase(username) && loginCsvPassword.equalsIgnoreCase(password)) {
-				user = new User(username, password);
+				service.setCurrentUser(new User(service, username, password));
 				flag_login = true;
 				break;
 			}
@@ -91,10 +96,6 @@ public class StartMenu implements Menu {
 			ui.displayMsg("User information could not be found.");
 		}
 
-	}
-
-	public User getUser() {
-		return user;
 	}
 
 }

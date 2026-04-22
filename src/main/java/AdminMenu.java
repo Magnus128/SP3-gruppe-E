@@ -63,7 +63,7 @@ public class AdminMenu extends UserMenu {
         double rating = scanner.nextDouble();
         scanner.nextLine();
 
-        Category[] categories = {};
+        ArrayList<Category> categories = new ArrayList<>();
 
         if (type == 1) {
             Movie movie = new Movie(name, releaseYear, categories, rating);

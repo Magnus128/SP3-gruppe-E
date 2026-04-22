@@ -25,7 +25,21 @@ public class StreamingService {
 		loadUserMenu();
 	}
 
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public ArrayList<Movie> getMovies() {
+		return movies;
+	}
+
+	public ArrayList<Series> getSeries() {
+		return series;
+	}
+
 	private void loadUserMenu() {
+		var userMenu = new UserMenu(this);
+		userMenu.showOptions();
 	}
 
 	public void endSession() {
@@ -33,7 +47,8 @@ public class StreamingService {
 		saveData();
 	}
 
-	private void saveData() {
+	public void saveData() {
+
 	}
 
 	public void loadMedia() {
@@ -110,8 +125,11 @@ public class StreamingService {
 
 	private void loadStartMenu() {
 		//int choice = StartMenu.showOptions(); //1 = login  2 = create account
-		
-
+		var startMenu = new StartMenu(this);
+		startMenu.showOptions();
 	}
 
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
 }

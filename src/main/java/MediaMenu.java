@@ -1,11 +1,11 @@
 import util.TextUI;
 
 public class MediaMenu implements Menu{
-    private User currentUser;
+    private StreamingService service;
     private Media selectedMedia;
 
-    public MediaMenu(User user, Media media){
-        this.currentUser = user;
+    public MediaMenu(StreamingService service, Media media){
+        this.service = service;
         this.selectedMedia = media;
     }
 
@@ -34,17 +34,17 @@ public class MediaMenu implements Menu{
 
     public void playMedia(){
         // Afspiller media og tilføjer til Watched List
-        currentUser.addToWatched(selectedMedia);
+        service.getCurrentUser().addToWatched(selectedMedia);
     }
 
     public void addWatchLater(){
         // Tilføjer media til WatchLater liste
-        currentUser.addToWatchLater(selectedMedia);
+        service.getCurrentUser().addToWatchLater(selectedMedia);
     }
 
     public void removeWatchLater(){
         // Fjerne media fra WatchLater liste
-        currentUser.removeFromWatchLater(selectedMedia);
+        service.getCurrentUser().removeFromWatchLater(selectedMedia);
     }
 
 }

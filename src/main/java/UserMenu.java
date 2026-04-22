@@ -3,34 +3,55 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UserMenu implements Menu {
-	private ArrayList<Media> watchedList;
-	private ArrayList<Media> watchLaterList;
+	private StreamingService service;
+	private TextUI ui;
 
-	public UserMenu(ArrayList<Media> watchedList, ArrayList<Media> watchLaterList) {
-		this.watchedList = watchedList;
-		this.watchLaterList = watchLaterList;
+	public UserMenu(StreamingService service) {
+		this.service = service;
+		ui = new TextUI();
+
 	}
 
 	public void showOptions() {
-		var ui = new TextUI();
 		int choice = ui.promptNumeric("1. Search for media \n2. " +
 				"Search media in category \n3. Previously watched \n4. Watch later");
 		switch (choice) {
 			case 1:
 				// Search
-				String input = ui.promptText("Write the name of a movie of series: ");
-				Media media = findMediaFromName(input);
-				if (!(media == null)) {
-					var mediaMenu = new MediaMenu(media);
-					mediaMenu.showOptions();
-				} else {
-					System.out.println("Media not found, try again: ");
-					showOptions();
-				}
+				searchMedia();
 				break;
 			case 2:
 				// All in specific category
-				System.out.println("""
+				searchAllinCategory();
+				break;
+			case 3:
+				// Previously watched
+				showWatched();
+				break;
+			case 4:
+				// Watch later list
+				showWatchLater();
+				break;
+			default:
+				System.out.println("Try again:");
+				showOptions();
+		}
+	}
+
+	protected void searchMedia() {
+		String input = ui.promptText("Write the name of a movie of series: ");
+		Media media = findMediaFromName(input);
+		if (!(media == null)) {
+			var mediaMenu = new MediaMenu(service, media);
+			mediaMenu.showOptions();
+		} else {
+			System.out.println("Media not found, try again: ");
+			showOptions();
+		}
+	}
+
+	protected void searchAllinCategory() {
+		System.out.println("""
 						1. Action	2. Adventure	3. Biography\s
 						4. Comedy	5. Crime	6. Drama\s
 						7. Family	8. Fantasy	9. Film-Noir\s
@@ -39,54 +60,49 @@ public class UserMenu implements Menu {
 						16. Sci-fi	17. Sport	18. Thriller\s
 						19. War	20. Western
 						""");
-				int categoryChoice = ui.promptNumeric("Choose a category: ");
-				Category chosenCategory = chooseCategory(categoryChoice);
+		int categoryChoice = ui.promptNumeric("Choose a category: ");
+		Category chosenCategory = chooseCategory(categoryChoice);
 
-				ArrayList<Media> allInCategory = listAllInCategory(chosenCategory);
-				try {
-					var mediaMenu = new MediaMenu(chooseMedia(allInCategory));
-					mediaMenu.showOptions();
-				} catch (IndexOutOfBoundsException e) {
-					System.out.println(e.getMessage());
-					System.out.println("Try again: ");
-					showOptions();
-				}
-				break;
-			case 3:
-				// Previously watched
-				int watchedCounter = 1;
-				for (Media watchedMedia : watchedList) {
-					System.out.println(watchedCounter + ". " + watchedMedia.getName());
-					watchedCounter++;
-				}
-				try {
-					var mediaMenu = new MediaMenu(chooseMedia(watchedList));
-					mediaMenu.showOptions();
-				} catch (IndexOutOfBoundsException e) {
-					System.out.println(e.getMessage());
-					System.out.println("Try again: ");
-					showOptions();
-				}
-				break;
-			case 4:
-				// Watch later list
-				int watchLaterCounter = 1;
-				for (Media watchLaterMedia : watchLaterList) {
-					System.out.println(watchLaterCounter + ". " + watchLaterMedia.getName());
-					watchLaterCounter++;
-				}
-				try {
-					var mediaMenu = new MediaMenu(chooseMedia(watchLaterList));
-					mediaMenu.showOptions();
-				} catch (IndexOutOfBoundsException e) {
-					System.out.println(e.getMessage());
-					System.out.println("Try again: ");
-					showOptions();
-				}
-				break;
-			default:
-				System.out.println("Try again:");
-				showOptions();
+		ArrayList<Media> allInCategory = listAllInCategory(chosenCategory);
+		try {
+			var mediaMenu = new MediaMenu(service, chooseMedia(allInCategory));
+			mediaMenu.showOptions();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Try again: ");
+			showOptions();
+		}
+	}
+
+	protected void showWatched() {
+		int counter = 1;
+		for (Media watchedMedia : service.getCurrentUser().getWatchedList()) {
+			System.out.println(counter + ". " + watchedMedia.getName());
+			counter++;
+		}
+		try {
+			var mediaMenu = new MediaMenu(service, chooseMedia(service.getCurrentUser().getWatchedList()));
+			mediaMenu.showOptions();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Try again: ");
+			showOptions();
+		}
+	}
+
+	protected void showWatchLater() {
+		int counter = 1;
+		for (Media watchLaterMedia : service.getCurrentUser().getWatchLaterList()) {
+			System.out.println(counter + ". " + watchLaterMedia.getName());
+			counter++;
+		}
+		try {
+			var mediaMenu = new MediaMenu(service, chooseMedia(service.getCurrentUser().getWatchLaterList()));
+			mediaMenu.showOptions();
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Try again: ");
+			showOptions();
 		}
 	}
 
@@ -99,14 +115,14 @@ public class UserMenu implements Menu {
 	private ArrayList<Media> listAllInCategory(Category chosenCategory) {
 		int counter = 1;
 		ArrayList<Media> mediaList = new ArrayList<>();
-		for (Movie movie : StreamingService.movies) {
+		for (Movie movie : service.getMovies()) {
 			if (Arrays.asList(movie.getCategories()).contains(chosenCategory)) {
 				System.out.println(counter + ". " + movie.getName());
 				mediaList.add(movie);
 				counter++;
 			}
 		}
-		for (Series series : StreamingService.series) {
+		for (Series series : service.getSeries()) {
 			if (Arrays.asList(series.getCategories()).contains(chosenCategory)) {
 				System.out.println(counter + ". " + series.getName());
 				mediaList.add(series);
@@ -158,18 +174,24 @@ public class UserMenu implements Menu {
 				return Category.WAR;
 			case 20:
 				return Category.WESTERN;
+			case 21:
+				return Category.ANIMATION;
+			case 22:
+				return Category.DOCUMENTARY;
+			case 23:
+				return Category.TALKSHOW;
 			default:
 				return null;
 		}
 	}
 
 	private Media findMediaFromName(String mediaName) {
-		for (Movie movie : StreamingService.movies) {
+		for (Movie movie : service.getMovies()) {
 			if (mediaName.equalsIgnoreCase(movie.getName())) {
 				return movie;
 			}
 		}
-		for (Series series : StreamingService.series) {
+		for (Series series : service.getSeries()) {
 			if (mediaName.equalsIgnoreCase(series.getName())) {
 				return series;
 			}
