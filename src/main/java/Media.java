@@ -1,29 +1,37 @@
+import java.util.ArrayList;
+
 public abstract class Media {
-	private String name;
-	private int releaseYear;
-	private Category[] categories;
-	private double rating;
 
-	public Media(String name, int releaseYear, Category[] categories, double rating) {
-		this.name = name;
-		this.releaseYear = releaseYear;
-		this.categories = categories;
-		this.rating = rating;
-	}
+    private String name;
+    private int releaseYear;
+    private ArrayList<Category> categories;
+    private double rating;
 
-	public String getName() {
-		return name;
-	}
+    public Media(String name, int releaseYear, ArrayList<Category> categories, double rating) {
+        this.name = name;
+        this.releaseYear = releaseYear;
+        this.categories = categories;
+        this.rating = rating;
+    }
 
-	public int getReleaseYear() {
-		return releaseYear;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Category[] getCategories() {
-		return categories;
-	}
+    public int getReleaseYear() {
+        return releaseYear;
+    }
 
-	public double getRating() {
-		return rating;
-	}
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    @Override
+    public String toString() {
+        return name + "," + releaseYear + ", " + categories + ", " + rating;
+    }
 }

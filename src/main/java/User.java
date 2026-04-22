@@ -1,25 +1,19 @@
 import java.util.ArrayList;
 
 public class User {
-	private String userName;
-	private String password;
-	private ArrayList<Media> watchedList;
-	private ArrayList<Media> watchLaterList;
 
-	public User(String userName, String password, ArrayList<Media> watchedList, ArrayList<Media> watchLaterList) {
-		this.userName = userName;
-		this.password = password;
-		this.watchedList = watchedList;
-		this.watchLaterList = watchLaterList;
-	}
+    private String username;
+    private String password;
+    private ArrayList<Media> watchedList;
+    private ArrayList<Media> watchLaterList;
 
-	public void showMenu() {
-		if (this instanceof Admin) {
-			var adminMenu = new AdminMenu(watchedList, watchLaterList);
-			adminMenu.showOptions();
-		} else {
-			var userMenu = new UserMenu(watchedList, watchLaterList);
-			userMenu.showOptions();
-		}
-	}
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return username + ", " + password;
+    }
 }
