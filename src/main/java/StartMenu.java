@@ -4,6 +4,7 @@ import util.TextUI;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class StartMenu implements Menu {
 	TextUI ui = new TextUI();
@@ -102,16 +103,19 @@ public class StartMenu implements Menu {
 
 		}
 		ArrayList<String> saveData = FileIO.readData("src/main/resources/userSaveData/" + username + ".csv");
-		if (!saveData.isEmpty()) {
-			for (String data : saveData) {
-				String[] dataValues = data.trim().split(",");
-				String watchedListEntry = dataValues[0].trim();
-				String watchLaterListEntry = dataValues[1].trim();
-				service.getCurrentUser().addToWatched(service.findMediaFromName(watchedListEntry));
-				service.getCurrentUser().addToWatchLater(service.findMediaFromName(watchLaterListEntry));
+			if (!saveData.isEmpty()) {
+				for (String data : saveData) {
+					String[] dataValues = data.trim().split(",");
+					String watchedListEntry = dataValues[0].trim();
+					String watchLaterListEntry = dataValues[1].trim();
+					try {
+						service.getCurrentUser().addToWatched(service.findMediaFromName(watchedListEntry));
+						service.getCurrentUser().addToWatchLater(service.findMediaFromName(watchLaterListEntry));
+					} catch(NullPointerException e) {
+						System.out.println(e.getMessage());
+					}
+				}
 			}
-
-		}
 
 		if (flag_login) {
 			ui.displayMsg("The user is logged in.");

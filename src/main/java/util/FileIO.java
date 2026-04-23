@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class FileIO {
@@ -44,6 +45,8 @@ public class FileIO {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Filen findes ikke");
+        } catch (NoSuchElementException e) {
+            System.out.println("Filen er tom");
         }
         return data;
     }

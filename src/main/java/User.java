@@ -42,17 +42,17 @@ public class User {
             }
 
             for (int i = 0; i < lines.length; i++) {
-                if (!watchedList.isEmpty()) {
+                if (!watchedList.isEmpty() && watchedList.get(i) != null) {
                     lines[i] = watchedList.get(i).getName();
                 } else {
                     lines[i] = "0";
                 }
             }
             for (int i = 0; i < lines.length; i++) {
-                if (!watchLaterList.isEmpty()) {
+                if (!watchLaterList.isEmpty() && watchLaterList.get(i) != null) {
                     lines[i] += ", " + watchLaterList.get(i).getName();
                 } else {
-                    lines[i] = ", 0";
+                    lines[i] += ", 0";
                 }
             }
             String header = "watchedList, watchLaterList";
@@ -71,7 +71,6 @@ public class User {
         // Add the selected media to the watch later list
         watchLaterList.add(selectedMedia);
         // Save updated list to file
-        saveListsToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watch Later list.");
     }
 
@@ -79,7 +78,6 @@ public class User {
         // Remove the selected media from the watch later list
         watchLaterList.remove(selectedMedia);
         // Save updated list to file
-        saveListsToFile();
         System.out.println(selectedMedia.getName() + " has been removed from Watch Later list.");
     }
 
@@ -89,8 +87,6 @@ public class User {
         // Adds media to Watched list
         watchedList.add(selectedMedia);
         // Save updated lists to file
-        saveListsToFile();
-        saveListsToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watched list.");
         System.out.println("Now playing: " + selectedMedia.getName());
     }

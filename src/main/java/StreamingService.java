@@ -47,7 +47,7 @@ public class StreamingService {
 	}
 
 	public void saveData() {
-
+		currentUser.saveListsToFile();
 	}
 
 	public void loadMedia() {
