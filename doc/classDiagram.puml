@@ -18,12 +18,18 @@ class StreamingService {
 }
 
 class User {
+    StreamingService service
     String userName
     String password
     ArrayList<Media> watchedList
     ArrayList<Media> watchLaterList
-    User (String userName, String password)
+    User (StreamingService service, String userName, String password)
     void showMenu()
+    saveWatchedToFile()
+    saveWatchLaterToFile()
+    addToWatchLater()
+    removeFromWatchLater()
+    addToWatched()
 }
 
 class Admin {
@@ -86,8 +92,8 @@ class AdminMenu {
 
 class MediaMenu {
     Media selectedMedia
-    User currentUser
-    MediaMenu(User user, Media media)
+    StreamingService service
+    MediaMenu(StreamingService servuce, Media media)
     void showOptions()
     void playMedia() //adds to watchedList
     void addWatchLater()
