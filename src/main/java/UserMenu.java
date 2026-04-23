@@ -51,7 +51,6 @@ public class UserMenu implements Menu {
 			mediaMenu.showOptions();
 		} else {
 			System.out.println("Media not found, try again: ");
-			showOptions();
 		}
 	}
 
@@ -75,7 +74,6 @@ public class UserMenu implements Menu {
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println(e.getMessage());
 			System.out.println("Try again: ");
-			showOptions();
 		}
 	}
 
@@ -91,15 +89,18 @@ public class UserMenu implements Menu {
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println(e.getMessage());
 			System.out.println("Try again: ");
-			showOptions();
 		}
 	}
 
 	protected void showWatchLater() {
 		int counter = 1;
-		for (Media watchLaterMedia : service.getCurrentUser().getWatchLaterList()) {
-			System.out.println(counter + ". " + watchLaterMedia.getName());
-			counter++;
+		try {
+			for (Media watchLaterMedia : service.getCurrentUser().getWatchLaterList()) {
+				System.out.println(counter + ". " + watchLaterMedia.getName());
+				counter++;
+			}
+		} catch (NullPointerException e) {
+			System.out.println("Watch later list empty");
 		}
 		try {
 			var mediaMenu = new MediaMenu(service, chooseMedia(service.getCurrentUser().getWatchLaterList()));
@@ -107,7 +108,6 @@ public class UserMenu implements Menu {
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println(e.getMessage());
 			System.out.println("Try again: ");
-			showOptions();
 		}
 	}
 

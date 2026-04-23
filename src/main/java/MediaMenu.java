@@ -27,7 +27,7 @@ public class MediaMenu implements Menu{
                 break;
             default:
                 System.out.println("Try again");
-                this.showOptions();
+                showOptions();
         }
     }
 
