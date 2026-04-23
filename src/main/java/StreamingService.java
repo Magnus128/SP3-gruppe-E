@@ -131,4 +131,18 @@ public class StreamingService {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
+
+	public Media findMediaFromName(String mediaName) {
+		for (Movie movie : getMovies()) {
+			if (mediaName.equalsIgnoreCase(movie.getName())) {
+				return movie;
+			}
+		}
+		for (Series series : getSeries()) {
+			if (mediaName.equalsIgnoreCase(series.getName())) {
+				return series;
+			}
+		}
+		return null;
+	}
 }

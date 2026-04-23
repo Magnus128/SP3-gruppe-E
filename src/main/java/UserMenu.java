@@ -46,7 +46,7 @@ public class UserMenu implements Menu {
 
 	protected void searchMedia() {
 		String input = ui.promptText("Write the name of a movie of series: ");
-		Media media = findMediaFromName(input);
+		Media media = service.findMediaFromName(input);
 		if (!(media == null)) {
 			var mediaMenu = new MediaMenu(service, media);
 			mediaMenu.showOptions();
@@ -191,17 +191,5 @@ public class UserMenu implements Menu {
 		}
 	}
 
-	private Media findMediaFromName(String mediaName) {
-		for (Movie movie : service.getMovies()) {
-			if (mediaName.equalsIgnoreCase(movie.getName())) {
-				return movie;
-			}
-		}
-		for (Series series : service.getSeries()) {
-			if (mediaName.equalsIgnoreCase(series.getName())) {
-				return series;
-			}
-		}
-		return null;
-	}
+
 }

@@ -31,51 +31,37 @@ public class User {
 			userMenu.showOptions();
 	}
 
-    public void saveWatchedToFile() {
-        try (FileWriter writer = new FileWriter("src/main/resources/watched.csv")) {
+    public void saveListsToFile() {
+        try (FileWriter writer = new FileWriter("src/main/resources/userSaveData/" + username + ".csv")) {
 
-            for (Media media : watchedList) {
-                // Converts Category[] → String
-                StringBuilder categoryString = new StringBuilder();
-                ArrayList<Category> categories = media.getCategories();
-
-                for (int i = 0; i < categories.size(); i++) {
-                    categoryString.append(categories.get(i).name());
-                    if (i < categories.size() - 1) {
-                        categoryString.append(", ");
-                    }
-                }
-
-                writer.write(media.getName() + "; " +
-                        media.getReleaseYear() + "; " +
-                        categoryString + "; " +
-                        media.getRating() + "\n");
+            String[] lines = null;
+            if (watchedList.size() > watchLaterList.size()) {
+                lines = new String[watchedList.size()];
+            } else {
+                lines = new String[watchLaterList.size()];
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void saveWatchLaterToFile() {
-        try (FileWriter writer = new FileWriter("src/main/resources/watchlater.csv")) {
-
-            for (Media media : watchLaterList) {
-                // Converts Category[] → String
-                StringBuilder categoryString = new StringBuilder();
-                ArrayList<Category> categories = media.getCategories();
-
-                for (int i = 0; i < categories.size(); i++) {
-                    categoryString.append(categories.get(i).name());
-                    if (i < categories.size() - 1) {
-                        categoryString.append(", ");
-                    }
+            for (int i = 0; i < lines.length; i++) {
+                if (!watchedList.isEmpty()) {
+                    lines[i] = watchedList.get(i).getName();
+                } else {
+                    lines[i] = "0";
                 }
-
-                writer.write(media.getName() + "; " +
-                                media.getReleaseYear() + "; " +
-                                categoryString + "; " +
-                                media.getRating() + "\n");
             }
+            for (int i = 0; i < lines.length; i++) {
+                if (!watchLaterList.isEmpty()) {
+                    lines[i] += ", " + watchLaterList.get(i).getName();
+                } else {
+                    lines[i] = ", 0";
+                }
+            }
+            String header = "watchedList, watchLaterList";
+            writer.write(header + "\n");
+
+            for (String line : lines) {
+                writer.write(line + "\n");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,7 +71,7 @@ public class User {
         // Add the selected media to the watch later list
         watchLaterList.add(selectedMedia);
         // Save updated list to file
-        saveWatchLaterToFile();
+        saveListsToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watch Later list.");
     }
 
@@ -93,7 +79,7 @@ public class User {
         // Remove the selected media from the watch later list
         watchLaterList.remove(selectedMedia);
         // Save updated list to file
-        saveWatchLaterToFile();
+        saveListsToFile();
         System.out.println(selectedMedia.getName() + " has been removed from Watch Later list.");
     }
 
@@ -103,8 +89,8 @@ public class User {
         // Adds media to Watched list
         watchedList.add(selectedMedia);
         // Save updated lists to file
-        saveWatchLaterToFile();
-        saveWatchedToFile();
+        saveListsToFile();
+        saveListsToFile();
         System.out.println(selectedMedia.getName() + " has been added to Watched list.");
         System.out.println("Now playing: " + selectedMedia.getName());
     }

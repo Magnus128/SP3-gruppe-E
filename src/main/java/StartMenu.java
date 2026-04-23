@@ -1,6 +1,8 @@
 import util.FileIO;
 import util.TextUI;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class StartMenu implements Menu {
@@ -97,6 +99,18 @@ public class StartMenu implements Menu {
 				flag_login = true;
 				break;
 			}
+
+		}
+		ArrayList<String> saveData = FileIO.readData("src/main/resources/userSaveData/" + username + ".csv");
+		if (!saveData.isEmpty()) {
+			for (String data : saveData) {
+				String[] dataValues = data.trim().split(",");
+				String watchedListEntry = dataValues[0].trim();
+				String watchLaterListEntry = dataValues[1].trim();
+				service.getCurrentUser().addToWatched(service.findMediaFromName(watchedListEntry));
+				service.getCurrentUser().addToWatchLater(service.findMediaFromName(watchLaterListEntry));
+			}
+
 		}
 
 		if (flag_login) {
