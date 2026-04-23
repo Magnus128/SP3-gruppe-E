@@ -102,25 +102,31 @@ public class StartMenu implements Menu {
 			}
 
 		}
-		ArrayList<String> saveData = FileIO.readData("src/main/resources/userSaveData/" + username + ".csv");
+
+
+		if (flag_login) {
+			ui.displayMsg("The user is logged in.");
+			ArrayList<String> saveData = FileIO.readData("src/main/resources/userSaveData/" + username + ".csv");
 			if (!saveData.isEmpty()) {
 				for (String data : saveData) {
 					String[] dataValues = data.trim().split(",");
 					String watchedListEntry = dataValues[0].trim();
 					String watchLaterListEntry = dataValues[1].trim();
 					try {
-						service.getCurrentUser().addToWatched(service.findMediaFromName(watchedListEntry));
-						service.getCurrentUser().addToWatchLater(service.findMediaFromName(watchLaterListEntry));
+						if (!watchedListEntry.equalsIgnoreCase("0")) {
+							service.getCurrentUser().addToWatched(service.findMediaFromName(watchedListEntry));
+						}
+						if (!watchLaterListEntry.equalsIgnoreCase("0")) {
+							service.getCurrentUser().addToWatchLater(service.findMediaFromName(watchLaterListEntry));
+						}
 					} catch(NullPointerException e) {
 						System.out.println(e.getMessage());
 					}
 				}
 			}
-
-		if (flag_login) {
-			ui.displayMsg("The user is logged in.");
 		} else {
 			ui.displayMsg("User information could not be found.");
+			loginUser();
 		}
 
 	}

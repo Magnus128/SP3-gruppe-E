@@ -68,10 +68,12 @@ public class User {
     }
 
     public void addToWatchLater(Media selectedMedia) {
-        // Add the selected media to the watch later list
-        watchLaterList.add(selectedMedia);
-        // Save updated list to file
-        System.out.println(selectedMedia.getName() + " has been added to Watch Later list.");
+        if (!watchLaterList.contains(selectedMedia)) {
+            // Add the selected media to the watch later list
+            watchLaterList.add(selectedMedia);
+            // Save updated list to file
+            System.out.println(selectedMedia.getName() + " has been added to Watch Later list.");
+        }
     }
 
     public void removeFromWatchLater(Media selectedMedia) {
@@ -82,9 +84,11 @@ public class User {
     }
 
     public void addToWatched(Media selectedMedia) {
-        // Removes media from Watch Later list first
-        watchLaterList.remove(selectedMedia);
-        // Adds media to Watched list
-        watchedList.add(selectedMedia);
+        if (!watchedList.contains(selectedMedia)) {
+            // Removes media from Watch Later list first
+            watchLaterList.remove(selectedMedia);
+            // Adds media to Watched list
+            watchedList.add(selectedMedia);
+        }
     }
 }
