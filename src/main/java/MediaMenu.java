@@ -27,13 +27,15 @@ public class MediaMenu implements Menu{
                 break;
             default:
                 System.out.println("Try again");
-                showOptions();
+                this.showOptions();
         }
     }
 
     public void playMedia(){
         // Afspiller media og tilføjer til Watched List
         service.getCurrentUser().addToWatched(selectedMedia);
+        System.out.println("Now playing: " + selectedMedia.getName());
+        System.out.println(selectedMedia.getName() + " has been added to Watched list.");
     }
 
     public void addWatchLater(){

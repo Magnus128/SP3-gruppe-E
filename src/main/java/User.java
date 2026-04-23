@@ -86,8 +86,5 @@ public class User {
         watchLaterList.remove(selectedMedia);
         // Adds media to Watched list
         watchedList.add(selectedMedia);
-        // Save updated lists to file
-        System.out.println(selectedMedia.getName() + " has been added to Watched list.");
-        System.out.println("Now playing: " + selectedMedia.getName());
     }
 }

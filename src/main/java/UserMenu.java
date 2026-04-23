@@ -1,6 +1,5 @@
 import util.TextUI;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UserMenu implements Menu {
 	private StreamingService service;
